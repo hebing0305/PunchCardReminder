@@ -76,6 +76,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="上下班时自动打开钉钉"
+                android:textColor="#000" />
+
+            <Switch
+                android:id="@+id/ding_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -86,8 +115,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="提示：本软件是通过监听用户断开或者连接公司WIFI时，提醒用户及时打卡。需要注意的是软件需要后台运行，所以请不要杀掉此软件后台，推荐加入白名单，否则不会提醒。"
-            android:textColor="#000" />
+            android:text="提示：本软件是通过监听用户断开或者连接公司WIFI时，提醒用户及时打卡。需要注意的是软件需要后台运行，所以请不要杀掉此软件后台，推荐加入白名单，设置允许自启动，否则不会提醒。"
+            android:textColor="#ff00" />
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.bing.punchcardreminder;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -10,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -22,8 +22,11 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     this.context = context;
-    sp = context.getSharedPreferences("WIFI", Context.MODE_PRIVATE);
-    if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+      Toast.makeText(context, "正在开机启动....", Toast.LENGTH_LONG).show();
+      context.startService(new Intent(context, MyService.class));
+    } else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+      sp = context.getSharedPreferences("WIFI", Context.MODE_PRIVATE);
       NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
       System.out.println("networkInfo.getState()=" + networkInfo.getState());
       switch (networkInfo.getState()) {
@@ -60,11 +63,8 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
 
   public boolean isTime(boolean isUpTime) {
     boolean isTime = false;
-    int hour = sp.getInt(isUpTime ? AppUtils.UP_TIME_HOUR : AppUtils.DOWN_TIME_HOUR, isUpTime ? 9 : 18);
-    int min = sp.getInt(isUpTime ? AppUtils.UP_TIME_MIN : AppUtils.DOWN_TIME_MIN, 0);
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.HOUR_OF_DAY, hour);
-    calendar.set(Calendar.MINUTE, min);
+    Calendar calendar = AppUtils.getWorkTime(context, isUpTime);
+
     System.out.println(calendar.getTime());
     if (isUpTime && System.currentTimeMillis() < calendar.getTimeInMillis()) {
       isTime = true;
