@@ -9,6 +9,7 @@ public class AppUtils {
   public static final String UP_TIME_HOUR = "UP_TIME_HOUR";
   public static final String DOWN_TIME_MIN = "DOWN_TIME_MIN";
   public static final String UP_TIME_MIN = "UP_TIME_MIN";
+  public static final String CONNECTED_WIFI_NAME = "CONNECTED_WIFI_NAME";
 
   public static String timeFormat(int hour, int min) {
     Calendar calendar = Calendar.getInstance();

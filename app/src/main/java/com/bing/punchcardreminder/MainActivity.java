@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     int down_hour = sp.getInt(AppUtils.DOWN_TIME_HOUR, 18);
     int down_min = sp.getInt(AppUtils.DOWN_TIME_MIN, 0);
     String down_time = AppUtils.timeFormat(down_hour, down_min);
-    mDownTime.setText("上班时间:" + down_time);
+    mDownTime.setText("下班时间:" + down_time);
   }
 
   @Override
