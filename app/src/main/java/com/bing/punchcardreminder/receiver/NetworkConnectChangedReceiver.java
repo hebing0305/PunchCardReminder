@@ -1,4 +1,4 @@
-package com.bing.punchcardreminder;
+package com.bing.punchcardreminder.receiver;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
-import android.widget.Toast;
+
+import com.bing.punchcardreminder.AppUtils;
+import com.bing.punchcardreminder.TipActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -22,10 +24,7 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     this.context = context;
-    if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-      Toast.makeText(context, "正在开机启动....", Toast.LENGTH_LONG).show();
-      context.startService(new Intent(context, MyService.class));
-    } else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
       sp = context.getSharedPreferences("WIFI", Context.MODE_PRIVATE);
       NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
       System.out.println("networkInfo.getState()=" + networkInfo.getState());
