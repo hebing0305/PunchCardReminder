@@ -40,20 +40,18 @@ public class WifiChoseAcitivity extends AppCompatActivity {
     mRecycleview.setLayoutManager(linearLayoutManager);
     adapter = new ChoseWifiActivityAdapter(scanResults);
     mRecycleview.setAdapter(adapter);
-    adapter.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ChoseWifiActivityAdapter.MyViewHodler hodler = (ChoseWifiActivityAdapter.MyViewHodler) mRecycleview.findContainingViewHolder(v);
-        if (hodler != null) {
-          getSharedPreferences("WIFI", MODE_PRIVATE)
-              .edit()
-              .putString(AppUtils.WIFI_NAME, hodler.scanResult.SSID)
-              .commit();
-          System.out.println("选中WIFI SSID:" + hodler.scanResult.SSID);
-        }
-        finish();
-        setResult(0, null);
+    adapter.setOnClickListener(v -> {
+
+      ChoseWifiActivityAdapter.MyViewHodler hodler = (ChoseWifiActivityAdapter.MyViewHodler) mRecycleview.findContainingViewHolder(v);
+      if (hodler != null) {
+        getSharedPreferences("WIFI", MODE_PRIVATE)
+            .edit()
+            .putString(AppUtils.WIFI_NAME, hodler.scanResult.SSID)
+            .commit();
+        System.out.println("选中WIFI SSID:" + hodler.scanResult.SSID);
       }
+      finish();
+      setResult(0, null);
     });
 
     receiver = new WifiBroadcastReceiver();

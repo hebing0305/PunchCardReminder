@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="提示：本软件是通过监听用户断开或者连接公司WIFI时，提醒用户及时打卡。需要注意的是软件需要后台运行，所以请不要杀掉此软件后台，推荐加入白名单，设置允许自启动，否则不会提醒。"
+            android:text="提示：本软件是通过监听用户断开或者连接公司WIFI时，提醒用户及时打卡。需要注意的是软件需要后台运行，所以请不要杀掉此软件后台，推荐加入白名单，设置允许自启动，否则不会提醒。（建议权限都钩下，最近发现小米手机禁止后台弹出窗口，需要手动设置权限）"
             android:textColor="#ff00" />
     </androidx.cardview.widget.CardView>
 
