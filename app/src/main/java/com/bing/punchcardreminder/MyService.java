@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 import androidx.core.app.NotificationCompat;
 
@@ -20,6 +21,7 @@ public class MyService extends Service {
   String channel_id = "com.bing.punchcardreminder";
   public static final int spaceTime = 60000;
   NetworkConnectChangedReceiver receiver;
+  PowerManager.WakeLock wakeLock;
 
   public MyService() {
   }
@@ -51,6 +53,9 @@ public class MyService extends Service {
     registerReceiver(receiver, mIntentFilter);
     boolean isOpenDingDing = getSharedPreferences("WIFI", Context.MODE_PRIVATE).getBoolean(AppUtils.DING_DING_SWITCH, false);
     new Thread(() -> {
+      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+      wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, MyService.class.getName());
+      wakeLock.acquire();
       while (isOpenDingDing) {
         try {
           System.out.println("MyService running");
