@@ -53,9 +53,6 @@ public class MyService extends Service {
     registerReceiver(receiver, mIntentFilter);
     boolean isOpenDingDing = getSharedPreferences("WIFI", Context.MODE_PRIVATE).getBoolean(AppUtils.DING_DING_SWITCH, false);
     new Thread(() -> {
-      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-      wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, MyService.class.getName());
-      wakeLock.acquire();
       while (isOpenDingDing) {
         try {
           System.out.println("MyService running");
@@ -73,6 +70,12 @@ public class MyService extends Service {
         }
       }
     }).start();
+
+    if (isOpenDingDing) {
+      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+      wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, MyService.class.getName());
+      wakeLock.acquire();
+    }
     return START_STICKY;
   }
 
@@ -90,5 +93,8 @@ public class MyService extends Service {
     unregisterReceiver(receiver);
     stopForeground(true);
     startService(new Intent(this, MyService.class));
+    if (wakeLock != null) {
+      wakeLock.release();
+    }
   }
 }
