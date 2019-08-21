@@ -21,6 +21,14 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def versionName = "${android.defaultConfig.versionName}"
+            def newName = "公司打卡提醒v" + versionName + ".apk"
+            outputFileName = newName
+        }
+    }
+
 }
 
 dependencies {
