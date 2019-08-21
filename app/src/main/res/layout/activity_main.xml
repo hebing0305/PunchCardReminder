@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="上下班时自动打开钉钉"
+                android:text="上下班时自动打开钉钉(此设置会增加耗电)"
                 android:textColor="#000" />
 
             <Switch
