@@ -1,8 +1,6 @@
 package com.bing.punchcardreminder;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,10 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.bing.punchcardreminder.receiver.NetworkConnectChangedReceiver;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
