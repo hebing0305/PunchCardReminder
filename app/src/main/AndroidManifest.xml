@@ -52,6 +52,12 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".receiver.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.bing.punchcardreminder.action.alarm"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

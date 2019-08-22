@@ -5,9 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 
-import com.bing.punchcardreminder.receiver.NetworkConnectChangedReceiver;
+import com.bing.punchcardreminder.receiver.AlarmReceiver;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,17 +43,27 @@ public class AppUtils {
     return calendar;
   }
 
-  public static void setAlarm(Context context, Calendar calendar) {
-    System.out.println("setAlarm=" + calendar.getTime());
+  public static void setAlarm(Context context, long time) {
+    System.out.println("setAlarm=" + time);
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    Intent alarmIntent = new Intent(context, NetworkConnectChangedReceiver.class);
+    Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+    alarmIntent.setAction(AppUtils.ALARM_ACTION);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);//通过广播接收
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-          calendar.getTimeInMillis(), pendingIntent);
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      alarmManager.setExact(AlarmManager.RTC_WAKEUP,
-          calendar.getTimeInMillis(), pendingIntent);
+    alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+  }
+
+  public static void nextAlarm(Context context) {
+    long upTime = AppUtils.getWorkTime(context, true).getTimeInMillis();
+    long downTime = AppUtils.getWorkTime(context, false).getTimeInMillis();
+    long nowTime = System.currentTimeMillis();
+    if (nowTime < upTime) {
+      AppUtils.setAlarm(context, upTime);
+    } else if (nowTime > upTime && nowTime < downTime) {
+      AppUtils.setAlarm(context, downTime);
+    } else {
+      Calendar calendar = getWorkTime(context, true);
+      calendar.add(Calendar.DATE, 1);
+      AppUtils.setAlarm(context, calendar.getTimeInMillis());
     }
   }
 }

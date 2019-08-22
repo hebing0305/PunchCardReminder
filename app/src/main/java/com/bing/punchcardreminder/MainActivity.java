@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     mDingSwitch = findViewById(R.id.ding_switch);
     mDingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
       sp.edit().putBoolean(AppUtils.DING_DING_SWITCH, isChecked).commit();
-      startService(new Intent(MainActivity.this, MyService.class));
+      AppUtils.nextAlarm(this);
     });
   }
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
           .commit();
 
       if (mDingSwitch.isChecked()) {
-        AppUtils.setAlarm(MainActivity.this, AppUtils.getWorkTime(MainActivity.this, isUpTime));
+        AppUtils.nextAlarm(this);
       }
     }, hour, min, true);
     dialog.show();
