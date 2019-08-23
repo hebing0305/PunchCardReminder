@@ -15,7 +15,6 @@ import com.bing.punchcardreminder.receiver.NetworkConnectChangedReceiver;
 
 public class MyService extends Service {
   String channel_id = "com.bing.punchcardreminder";
-  public static final int spaceTime = 60000;
   NetworkConnectChangedReceiver receiver;
 
   public MyService() {
@@ -52,14 +51,6 @@ public class MyService extends Service {
   public int onStartCommand(Intent intent, int flags, int startId) {
     super.onStartCommand(intent, flags, startId);
     return START_STICKY;
-  }
-
-  public boolean isYesTime(long time) {
-    long temp = System.currentTimeMillis() - time;
-    if (Math.abs(temp) <= spaceTime) {
-      return true;
-    }
-    return false;
   }
 
   @Override
